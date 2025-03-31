@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>
+    .hero {
+        height: 87.6vh;
+        background: black;
+    }
+</style>
+
+<div class="hero d-flex justify-content-center align-items-center">
+    <div style="background: red; width: 40%;" class="text-center">
+        <h1 class="display-4">Bem-Vindo ao AppO</h1>
+        <p>
+            Desfrute da melhor Rede Social do Mundo
+            <a asp-area="Identity" asp-page="/Account/Login">Faça Login</a> para continuar
+        </p>
+    </div>
+</div>
