@@ -1,20 +1,95 @@
-﻿@{
+﻿@model LoginViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <style>
     .hero {
-        height: 87.6vh;
+        height: 100vh;
         background: black;
     }
+    img{
+        width: 70%;
+        max-width: 200px;
+    }
+    .esqueceuCadastro{
+        color:white;
+        text-decoration: none;
+        font-family: "Poppins", sans-serif;
+        font-weight: 300;
+        font-style: normal;
+        font-size:15px;
+    }
+    .cardPrincipal {
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+        border-image: linear-gradient(90deg, rgba(0,133,255,1) 0%, rgba(89,0,159,1) 100%) 1;
+    }
+
+    .swal2-timer-progress-bar {
+        background: linear-gradient(90deg, rgba(0,133,255,1) 0%, rgba(89,0,159,1) 100%);
+    }
+
+    .swal2-popup {
+        background: black;
+    }
+
+    .swal2-title {
+        color: white;
+    }
+
 </style>
 
+
 <div class="hero d-flex justify-content-center align-items-center">
-    <div style="background: red; width: 40%;" class="text-center">
-        <h1 class="display-4">Bem-Vindo ao AppO</h1>
-        <p>
-            Desfrute da melhor Rede Social do Mundo
-            <a asp-area="Identity" asp-page="/Account/Login">Faça Login</a> para continuar
-        </p>
+    <div style="width: 30%;" class="text-center cardPrincipal p-3">
+        <img alt="Logo AppO" src="~/images/AppoImages/LogoCompleta.svg" />
+        <form asp-controller="Account" asp-action="Login" method="post" role="form">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="ReturnUrl" />
+
+            <div class="mb-3">
+                <input asp-for="UserName" class="form-control bg-black text-white" placeholder="Seu Usuário">
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <input asp-for="Password" type="password" class="form-control bg-black text-white" placeholder="Sua Senha">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="glow-on-hover" style="width: 100%;">Entrar</button>
+            </div>
+        </form>
+        <div class="text-center mt-2">
+            <a class="esqueceuCadastro" href="#">Esqueceu a senha?</a>
+            <p class="esqueceuCadastro" href="#">Não tem uma conta? <a href="#">Cadastre-se</a></p>
+        </div>
     </div>
 </div>
+
+@if (TempData["Errors"] != null)
+{
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            var errorMessage = '@TempData["Errors"]';
+            Toast.fire({
+                icon: "error",
+                title: errorMessage
+            });
+        });
+    </script>
+}
