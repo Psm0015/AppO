@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AppO.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace AppO.Services;
 
@@ -35,7 +36,7 @@ public class SeedUserRoleInitial : ISeedUserRoleInitial
     {
         if (_userManager.FindByEmailAsync("usuario@localhost").Result == null)
         {
-            IdentityUser user = new IdentityUser();
+            IdentityUser user = new appUser();
             user.UserName = "usuario@localhost";
             user.Email = "usuario@localhost";
             user.NormalizedUserName = "USUARIO@LOCALHOST";
@@ -53,7 +54,7 @@ public class SeedUserRoleInitial : ISeedUserRoleInitial
         }
         if (_userManager.FindByEmailAsync("admin@localhost").Result == null)
         {
-            IdentityUser user = new IdentityUser();
+            IdentityUser user = new appUser();
             user.UserName = "admin@localhost";
             user.Email = "admin@localhost";
             user.NormalizedUserName = "ADMIN@LOCALHOST";

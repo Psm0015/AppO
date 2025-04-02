@@ -1,4 +1,5 @@
-﻿using AppO.ViewModels;
+﻿using AppO.Models;
+using AppO.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,5 +54,42 @@ public class AccountController : Controller
         HttpContext.User = null;
         await _signInManager.SignOutAsync();
         return RedirectToAction("Index", "Home");
+    }
+
+    public async Task<IActionResult> Cadastro()
+    {
+        return View(new RegisterViewModel());
+    }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Cadastro(RegisterViewModel registerVM)
+    {
+        if (ModelState.IsValid)
+        {
+            if (!(string.Equals(registerVM.Password, registerVM.CPassword))) this.ModelState.AddModelError("Registro", "As senhas devem ser iguais");
+            else
+            {
+                var user = new appUser
+                {
+                    UserName = registerVM.Username,
+                    Name = registerVM.Name,
+                    DateOfBirth = registerVM.DateOfBirth,
+                    Biography = registerVM.Biography
+                };
+
+                var result = await _userManager.CreateAsync(user, registerVM.Password);
+
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, "Member");
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    this.ModelState.AddModelError("Registro", "Falha ao realizar o registro");
+                }
+            }
+        }
+        return View(registerVM);
     }
 }
