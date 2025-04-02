@@ -20,7 +20,13 @@ public class AccountController : Controller
     [HttpPost]
     public async Task<IActionResult> Login(LoginViewModel loginVM)
     {
-        if(!ModelState.IsValid) return RedirectToAction("Index", "Home");
+        if (!ModelState.IsValid)
+        {
+            TempData["Errors"] = string.Join(", ", ModelState.Values
+                                              .SelectMany(v => v.Errors)
+                                              .Select(e => e.ErrorMessage));
+            return RedirectToAction("Index", "Home");
+        } 
 
         var user = await _userManager.FindByNameAsync(loginVM.UserName);
 
@@ -38,6 +44,14 @@ public class AccountController : Controller
         }
         ModelState.AddModelError("", "Usuário ou Senha Inválidos!");
         TempData["Errors"] = "Usuário ou Senha Inválidos!";
+        return RedirectToAction("Index", "Home");
+    }
+    [HttpPost]
+    public async Task<IActionResult> Logout()
+    {
+        HttpContext.Session.Clear();
+        HttpContext.User = null;
+        await _signInManager.SignOutAsync();
         return RedirectToAction("Index", "Home");
     }
 }
