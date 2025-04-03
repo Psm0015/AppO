@@ -8,7 +8,6 @@ public class RegisterViewModel
     [Display(Name ="Nome de Usuário")]
     [StringLength (30, MinimumLength =4, ErrorMessage ="O Nome de Usuário não cumpre os requisitos")]
     public string Username { get; set; }
-
     public string Password { get; set; }
     public string CPassword { get; set; }
     public string Email { get; set; }

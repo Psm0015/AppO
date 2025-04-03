@@ -5,10 +5,10 @@ namespace AppO.Services;
 
 public class SeedUserRoleInitial : ISeedUserRoleInitial
 {
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<appUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
 
-    public SeedUserRoleInitial(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+    public SeedUserRoleInitial(UserManager<appUser> userManager, RoleManager<IdentityRole> roleManager)
     {
         _userManager = userManager;
         _roleManager = roleManager;
@@ -36,7 +36,7 @@ public class SeedUserRoleInitial : ISeedUserRoleInitial
     {
         if (_userManager.FindByEmailAsync("usuario@localhost").Result == null)
         {
-            IdentityUser user = new appUser();
+            appUser user = new appUser();
             user.UserName = "usuario@localhost";
             user.Email = "usuario@localhost";
             user.NormalizedUserName = "USUARIO@LOCALHOST";
@@ -54,7 +54,7 @@ public class SeedUserRoleInitial : ISeedUserRoleInitial
         }
         if (_userManager.FindByEmailAsync("admin@localhost").Result == null)
         {
-            IdentityUser user = new appUser();
+            appUser user = new appUser();
             user.UserName = "admin@localhost";
             user.Email = "admin@localhost";
             user.NormalizedUserName = "ADMIN@LOCALHOST";

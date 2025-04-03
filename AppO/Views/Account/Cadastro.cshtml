@@ -1,0 +1,68 @@
+﻿@model RegisterViewModel
+<style>
+    .container {
+        background: black;
+        height: 100%;
+    }
+    .container-form {
+        width: 80%;
+        -webkit-box-shadow: 0px 0px 10px 0px rgba(89,0,159,1);
+        -moz-box-shadow: 0px 0px 10px 0px rgba(89,0,159,1);
+        box-shadow: 0px 0px 10px 0px rgba(89,0,159,1);
+        border-radius:20px;
+    }
+    h1{
+        color: white;
+        font-size:35px;
+    }
+    label{
+        color: white;
+    }
+</style>
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="container-form text-center p-3 m-3 mt-5">
+        <h1 class="poppins-regular">Criar sua conta</h1>
+        <form class="text-start asp-controller="Account" asp-action="Cadastro" method="post" role="form">
+            <div class="row mb-3">
+                <div class="col">
+                    <label asp-for="Username" class="form-label"></label>
+                    <input asp-for="Username" class="form-control bg-black text-white" placeholder="Informe seu Usuário">
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control bg-black text-white" placeholder="Informe seu Nome">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label asp-for="Password" class="form-label"></label>
+                    <input asp-for="Password" type="password" class="form-control bg-black text-white" placeholder="Sua senha">
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="CPassword" class="form-label"></label>
+                    <input asp-for="CPassword" type="password" class="form-control bg-black text-white" placeholder="Confirme sua Senha">
+                    <span asp-validation-for="CPassword" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" class="form-control bg-black text-white" placeholder="Seu E-mail">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="DateOfBirth" class="form-label"></label>
+                    <input asp-for="DateOfBirth" type="datetime" class="form-control bg-black text-white" placeholder="Sua Senha">
+                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                </div>
+            </div>
+            
+        </form>
+        <div class="d-grid gap-2 justify-content-center align-content-center">
+            <button type="submit" class="glow-on-hover">Cadastre-se</button>
+        </div>
+    </div>
+</div>

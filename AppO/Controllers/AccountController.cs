@@ -8,11 +8,11 @@ namespace AppO.Controllers;
 public class AccountController : Controller
 {
 
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<appUser> _userManager;
 
-    private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly SignInManager<appUser> _signInManager;
 
-    public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+    public AccountController(UserManager<appUser> userManager, SignInManager<appUser> signInManager)
     {
         _userManager = userManager;
         _signInManager = signInManager;
