@@ -73,8 +73,7 @@ public class AccountController : Controller
                 {
                     UserName = registerVM.Username,
                     Name = registerVM.Name,
-                    DateOfBirth = registerVM.DateOfBirth,
-                    Biography = registerVM.Biography
+                    DateOfBirth = registerVM.DateOfBirth
                 };
 
                 var result = await _userManager.CreateAsync(user, registerVM.Password);
@@ -90,6 +89,21 @@ public class AccountController : Controller
                 }
             }
         }
+        TempData["Errors"] = string.Join(", ", ModelState.Values
+                                              .SelectMany(v => v.Errors)
+                                              .Select(e => e.ErrorMessage));
         return View(registerVM);
+    }
+    public async Task<IActionResult> Perfil()
+    {
+        var userId = _userManager.GetUserId(User);
+        appUser user = await _userManager.FindByIdAsync(userId);
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        return View(user);
     }
 }

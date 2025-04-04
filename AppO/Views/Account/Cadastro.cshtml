@@ -1,68 +1,183 @@
 ﻿@model RegisterViewModel
+
 <style>
     .container {
         background: black;
         height: 100%;
     }
+
     .container-form {
         width: 80%;
         -webkit-box-shadow: 0px 0px 10px 0px rgba(89,0,159,1);
         -moz-box-shadow: 0px 0px 10px 0px rgba(89,0,159,1);
         box-shadow: 0px 0px 10px 0px rgba(89,0,159,1);
-        border-radius:20px;
+        border-radius: 20px;
     }
-    h1{
+
+    h1 {
         color: white;
-        font-size:35px;
+        font-size: 35px;
     }
-    label{
+
+    label {
         color: white;
+    }
+
+    .password-requirements {
+        color: white;
+        font-size: 14px;
+        margin-top: 5px;
+        display: none; /* Inicialmente oculto */
+        position: absolute;
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0px 0px 10px rgba(89, 0, 159, 1);
+        width: 250px;
+        top: 50px;
+        left: 0;
+        right: 0;
+        margin: auto;
+        z-index: 1000;
+    }
+
+    .valid {
+        color: green;
+    }
+
+    .invalid {
+        color: red;
     }
 </style>
+
 <div class="container d-flex justify-content-center align-items-center">
     <div class="container-form text-center p-3 m-3 mt-5">
         <h1 class="poppins-regular">Criar sua conta</h1>
-        <form class="text-start asp-controller="Account" asp-action="Cadastro" method="post" role="form">
+        <form class="text-start" asp-controller="Account" asp-action="Cadastro" method="post" role="form">
             <div class="row mb-3">
                 <div class="col">
                     <label asp-for="Username" class="form-label"></label>
-                    <input asp-for="Username" class="form-control bg-black text-white" placeholder="Informe seu Usuário">
+                    <input asp-for="Username" class="form-control bg-black text-white" id="Username" placeholder="Informe seu Usuário">
                     <span asp-validation-for="Username" class="text-danger"></span>
                 </div>
                 <div class="col">
                     <label asp-for="Name" class="form-label"></label>
-                    <input asp-for="Name" class="form-control bg-black text-white" placeholder="Informe seu Nome">
+                    <input asp-for="Name" class="form-control bg-black text-white" id="Name" placeholder="Informe seu Nome">
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col">
                     <label asp-for="Password" class="form-label"></label>
-                    <input asp-for="Password" type="password" class="form-control bg-black text-white" placeholder="Sua senha">
+                    <input asp-for="Password" type="password" class="form-control bg-black text-white" id="Password" onfocus="showPasswordRequirements()" onblur="hidePasswordRequirements()" onkeyup="checkPasswordRequirements()" placeholder="Sua senha">
                     <span asp-validation-for="Password" class="text-danger"></span>
+                    <div id="passwordRequirements" class="password-requirements">
+                        <ul>
+                            <li id="lengthRequirement" class="invalid">Pelo menos 12 caracteres</li>
+                            <li id="uppercaseRequirement" class="invalid">Pelo menos uma letra maiúscula</li>
+                            <li id="lowercaseRequirement" class="invalid">Pelo menos uma letra minúscula</li>
+                            <li id="digitRequirement" class="invalid">Pelo menos um número</li>
+                            <li id="specialCharRequirement" class="invalid">Pelo menos um caractere especial</li>
+                            <li id="confirmPassword" class="invalid">Senhas iguais</li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="col">
                     <label asp-for="CPassword" class="form-label"></label>
-                    <input asp-for="CPassword" type="password" class="form-control bg-black text-white" placeholder="Confirme sua Senha">
+                    <input asp-for="CPassword" type="password" class="form-control bg-black text-white" id="CPassword" onkeyup="checkPasswordRequirements()" placeholder="Confirme sua Senha">
                     <span asp-validation-for="CPassword" class="text-danger"></span>
                 </div>
             </div>
             <div class="row mb-3">
                 <div class="col">
                     <label asp-for="Email" class="form-label"></label>
-                    <input asp-for="Email" class="form-control bg-black text-white" placeholder="Seu E-mail">
+                    <input asp-for="Email" class="form-control bg-black text-white" id="Email" placeholder="Seu E-mail">
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="col">
                     <label asp-for="DateOfBirth" class="form-label"></label>
-                    <input asp-for="DateOfBirth" type="datetime" class="form-control bg-black text-white" placeholder="Sua Senha">
+                    <input asp-for="DateOfBirth" type="datetime" class="form-control bg-black text-white" id="DateOfBirth" placeholder="Sua Data de Nascimento">
                     <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                 </div>
             </div>
-            
+            <div class="d-grid gap-2 justify-content-center align-content-center">
+                <button type="submit" class="glow-on-hover">Cadastre-se</button>
+            </div>
         </form>
-        <div class="d-grid gap-2 justify-content-center align-content-center">
-            <button type="submit" class="glow-on-hover">Cadastre-se</button>
-        </div>
     </div>
 </div>
+
+<script>
+    function showPasswordRequirements() {
+        document.getElementById("passwordRequirements").style.display = 'block';
+    }
+
+    function hidePasswordRequirements() {
+        document.getElementById("passwordRequirements").style.display = 'none';
+    }
+
+    function checkPasswordRequirements() {
+        const password = document.getElementById("Password").value;
+        const cPassword = document.getElementById("CPassword").value;
+
+        // Verificar comprimento
+        const lengthRequirement = document.getElementById("lengthRequirement");
+        if (password.length >= 12) {
+            lengthRequirement.classList.remove("invalid");
+            lengthRequirement.classList.add("valid");
+        } else {
+            lengthRequirement.classList.remove("valid");
+            lengthRequirement.classList.add("invalid");
+        }
+
+        // Verificar letra maiúscula
+        const uppercaseRequirement = document.getElementById("uppercaseRequirement");
+        if (/[A-Z]/.test(password)) {
+            uppercaseRequirement.classList.remove("invalid");
+            uppercaseRequirement.classList.add("valid");
+        } else {
+            uppercaseRequirement.classList.remove("valid");
+            uppercaseRequirement.classList.add("invalid");
+        }
+
+        // Verificar letra minúscula
+        const lowercaseRequirement = document.getElementById("lowercaseRequirement");
+        if (/[a-z]/.test(password)) {
+            lowercaseRequirement.classList.remove("invalid");
+            lowercaseRequirement.classList.add("valid");
+        } else {
+            lowercaseRequirement.classList.remove("valid");
+            lowercaseRequirement.classList.add("invalid");
+        }
+
+        // Verificar número
+        const digitRequirement = document.getElementById("digitRequirement");
+        if (/\d/.test(password)) {
+            digitRequirement.classList.remove("invalid");
+            digitRequirement.classList.add("valid");
+        } else {
+            digitRequirement.classList.remove("valid");
+            digitRequirement.classList.add("invalid");
+        }
+
+        // Verificar caractere especial
+        const specialCharRequirement = document.getElementById("specialCharRequirement");
+        if (/[^A-Za-z0-9]/.test(password)) {
+            specialCharRequirement.classList.remove("invalid");
+            specialCharRequirement.classList.add("valid");
+        } else {
+            specialCharRequirement.classList.remove("valid");
+            specialCharRequirement.classList.add("invalid");
+        }
+
+        // Verificar se as senhas são iguais
+        const confirmPassword = document.getElementById("confirmPassword");
+        if (cPassword === password && cPassword.length > 0) {
+            confirmPassword.classList.remove("invalid");
+            confirmPassword.classList.add("valid");
+        } else {
+            confirmPassword.classList.remove("valid");
+            confirmPassword.classList.add("invalid");
+        }
+    }
+</script>

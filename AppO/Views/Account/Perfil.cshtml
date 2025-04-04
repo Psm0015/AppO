@@ -1,0 +1,23 @@
+﻿@model appUser
+
+<style>
+    .bannerPerfil{
+        width:100%;
+        height:400px;
+        background-image: url("/images/Defaults/Banner Padrao.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .fotoPerfil{
+        width:150px;
+        border-radius:150px;
+    }
+</style>
+
+<div class="bannerPerfil">
+    <img class="fotoPerfil ms-5 bottom-0" src="~/images/Defaults/Avatar Padrao.png" alt="Foto de Perfil" />
+</div>
+<h1>@Model.Name</h1>
+<h1>@("@")@Model.UserName</h1>

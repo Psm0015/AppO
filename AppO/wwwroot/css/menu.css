@@ -1,0 +1,24 @@
+﻿.menu-lateral {
+    width: 300px;
+    height: 100%;
+    background-color: black;
+    position:fixed;
+    top:0;
+    left:0;
+}
+
+.item-menu a:hover {
+    font-weight: 600;
+}
+.item-menu a:hover {
+    background: rgb(20,20,20);
+    border-radius:30px;
+}
+.item-menu a {
+    text-decoration: none;
+    font-size:20px;
+}
+
+li {
+    list-style-type: none;
+}
