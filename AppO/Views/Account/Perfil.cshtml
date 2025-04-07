@@ -54,10 +54,11 @@
 </style>
 
 <div class="container">
-    <div class="bannerPerfil" style="background-image: url('@((Model.BannerImage != null) ? "data:image/jpeg;base64," + Convert.ToBase64String(Model.BannerImage) : "~/images/Defaults/Banner Padrao.png")');">
+    <!-- Banner -->
+    <div class="bannerPerfil" style="background-image: url('@(Model.BannerImage != null ? "data:image/jpeg;base64," + Convert.ToBase64String(Model.BannerImage) : Url.Content("~/images/Defaults/Banner Padrao.png"))');">
         <div class="perfilContainer">
-            <!-- Verifica se o usuário tem imagem de perfil -->
-            <img class="fotoPerfil" src="@((Model.UserImage != null) ? "data:image/jpeg;base64," + Convert.ToBase64String(Model.UserImage) : "~/images/Defaults/Avatar Padrao.png")" alt="Foto de Perfil" />
+            <!-- Foto de perfil -->
+            <img class="fotoPerfil" src="@(Model.UserImage != null ? "data:image/jpeg;base64," + Convert.ToBase64String(Model.UserImage) : Url.Content("~/images/Defaults/Avatar Padrao.png"))" alt="Foto de Perfil" />
         </div>
     </div>
 
