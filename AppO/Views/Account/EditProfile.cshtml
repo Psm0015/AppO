@@ -1,0 +1,116 @@
+﻿@model EditProfileViewModel
+
+@{
+    ViewData["Title"] = "Editar Perfil";
+}
+
+<div class="container mt-5">
+    <h2 class="text-white">@ViewData["Title"]</h2>
+    <form asp-action="EditProfile" method="post" enctype="multipart/form-data">
+        <div class="row d-flex">
+            <div class="col mb-3">
+                <label for="Username" class="form-label text-white">Nome de Usuário</label>
+                <input type="text" class="form-control" id="Username" name="Username" value="@Model.Username" required />
+            </div>
+            <div class="col mb-3">
+                <label for="Name" class="form-label text-white">Nome</label>
+                <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name" required />
+            </div>
+            <div class="col mb-3">
+                <label for="DateOfBirth" class="form-label text-white">Data de Nascimento</label>
+                <input type="date" class="form-control" id="DateOfBirth" name="DateOfBirth" value="@Model.DateOfBirth?.ToString("yyyy-MM-dd")" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="mb-3">
+                <label for="Biography" class="form-label text-white">Biografia</label>
+                <textarea class="form-control" id="Biography" name="Biography">@Model.Biography</textarea>
+            </div>
+        </div>
+        <div class="row d-flex">
+            <div class="mb-3 col" id="dragAreaUserImage">
+                <label for="UserImage" class="form-label text-white">Imagem de Perfil</label>
+                <div id="dropZoneUserImage" class="drop-zone">
+                    <p>Arraste e solte uma imagem aqui ou clique para selecionar.</p>
+                    <input type="file" class="form-control" id="UserImage" name="UserImage" accept="image/*" style="display: none;" />
+                </div>
+            </div>
+            <div class="mb-3 col" id="dragAreaBannerImage">
+                <label for="BannerImage" class="form-label text-white">Imagem de Banner</label>
+                <div id="dropZoneBannerImage" class="drop-zone">
+                    <p>Arraste e solte uma imagem aqui ou clique para selecionar.</p>
+                    <input type="file" class="form-control" id="BannerImage" name="BannerImage" accept="image/*" style="display: none;" />
+                </div>
+            </div>
+        </div>
+        
+
+        
+
+        <div class="d-flex flex-row justify-content-between">
+            <button type="submit" class="btn btn-success">Salvar</button>
+            <a asp-controller="Account" asp-action="Perfil" type="submit" class="btn btn-secondary">Voltar</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    function setupDragAndDrop(inputId, dropZoneId) {
+        const inputElement = document.getElementById(inputId);
+        const dropZoneElement = document.getElementById(dropZoneId);
+
+        dropZoneElement.addEventListener("dragover", function (event) {
+            event.preventDefault();
+            dropZoneElement.classList.add("dragging");
+        });
+
+        dropZoneElement.addEventListener("drop", function (event) {
+            event.preventDefault();
+            dropZoneElement.classList.remove("dragging");
+            const file = event.dataTransfer.files[0];
+            if (file) {
+                inputElement.files = event.dataTransfer.files;
+                dropZoneElement.querySelector("p").textContent = `Arquivo selecionado: ${file.name}`;
+            }
+        });
+
+        dropZoneElement.addEventListener("dragleave", function () {
+            dropZoneElement.classList.remove("dragging");
+        });
+
+        dropZoneElement.addEventListener("click", function () {
+            inputElement.click();
+        });
+
+        inputElement.addEventListener("change", function () {
+            const file = inputElement.files[0];
+            if (file) {
+                dropZoneElement.querySelector("p").textContent = `Arquivo selecionado: ${file.name}`;
+            }
+        });
+    }
+
+    setupDragAndDrop("UserImage", "dropZoneUserImage");
+    setupDragAndDrop("BannerImage", "dropZoneBannerImage");
+</script>
+
+<style>
+    .drop-zone {
+        border: 2px dashed #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+        background-color: #f7f7f7;
+    }
+
+        .drop-zone.dragging {
+            background-color: #e0e0e0;
+        }
+
+        .drop-zone p {
+            margin: 0;
+            font-size: 14px;
+            color: #777;
+        }
+</style>

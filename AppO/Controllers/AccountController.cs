@@ -47,6 +47,7 @@ public class AccountController : Controller
         TempData["Errors"] = "Usuário ou Senha Inválidos!";
         return RedirectToAction("Index", "Home");
     }
+
     [HttpPost]
     public async Task<IActionResult> Logout()
     {
@@ -105,5 +106,71 @@ public class AccountController : Controller
         }
 
         return View(user);
+    }
+
+    public async Task<IActionResult> EditProfile()
+    {
+        appUser user = _userManager.GetUserAsync(User).Result;
+        var model = new EditProfileViewModel
+        {
+            Name = user.Name,
+            Username = user.UserName,
+            DateOfBirth = user.DateOfBirth,
+            Biography = user.Biography,
+        };
+
+        return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> EditProfile(EditProfileViewModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            // Atualizar os dados do usuário
+            user.Name = model.Name;
+            user.UserName = model.Username;
+            user.DateOfBirth = model.DateOfBirth;
+            user.Biography = model.Biography;
+
+            // Processar a imagem de perfil
+            if (model.UserImage != null && model.UserImage.Length > 0)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await model.UserImage.CopyToAsync(memoryStream);
+                    user.UserImage = memoryStream.ToArray();
+                }
+            }
+
+            // Processar a imagem do banner
+            if (model.BannerImage != null && model.BannerImage.Length > 0)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await model.BannerImage.CopyToAsync(memoryStream);
+                    user.BannerImage = memoryStream.ToArray();
+                }
+            }
+
+            // Atualizar o usuário no banco de dados
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Perfil", "Account");
+            }
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+        }
+
+        return View(model);
     }
 }

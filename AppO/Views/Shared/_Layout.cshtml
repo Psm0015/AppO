@@ -24,6 +24,12 @@
         }
     </style>
     @if (SignInManager.IsSignedIn(User)){
+        <style>
+            .conteudo {
+                padding-left: 300px;
+                padding-right:0 !important;
+            }
+        </style>
         <nav class="menu-lateral">
             <div class="align-content-center align-items-center justify-content-center d-flex">
                 <img class="logo" src="~/images/AppoImages/LogoCompleta.svg" alt="Alternate Text" />
@@ -53,6 +59,13 @@
                     <a asp-action="Perfil" asp-controller="Account" class="text-white poppins-regular px-3 py-2">
                         <i class="fa-solid fa-user"></i>  Perfil
                     </a>
+                </li>
+                <li class="item-menu py-2">
+                    <form asp-controller="Account" asp-action="Logout" id="logoutForm" method="post" class="">
+                        <button type="submit" style="width:auto" class="nav-link btn btn-link py-0 text-danger poppins-regular ">
+                            <i class="fa-solid fa-door-open icon-logout hover-icon"></i>&nbsp;Sair
+                        </button>
+                    </form>
                 </li>
             </ul>
         </nav>
