@@ -1,5 +1,6 @@
 ﻿using AppO.Models;
 using AppO.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,6 +50,7 @@ public class AccountController : Controller
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> Logout()
     {
         HttpContext.Session.Clear();
@@ -95,6 +97,7 @@ public class AccountController : Controller
                                               .Select(e => e.ErrorMessage));
         return View(registerVM);
     }
+    [Authorize]
     public async Task<IActionResult> Perfil()
     {
         var userId = _userManager.GetUserId(User);
@@ -107,7 +110,7 @@ public class AccountController : Controller
 
         return View(user);
     }
-
+    [Authorize]
     public async Task<IActionResult> EditProfile()
     {
         appUser user = _userManager.GetUserAsync(User).Result;
@@ -124,6 +127,7 @@ public class AccountController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize]
     public async Task<IActionResult> EditProfile(EditProfileViewModel model)
     {
         if (ModelState.IsValid)

@@ -1,5 +1,7 @@
 using AppO.Data;
 using AppO.Models;
+using AppO.Repositories;
+using AppO.Repositories.Interfaces;
 using AppO.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +30,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 });
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<ISeedUserRoleInitial, SeedUserRoleInitial>();
 builder.Services.AddAuthorization(options =>
 {

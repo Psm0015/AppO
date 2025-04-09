@@ -1,5 +1,4 @@
 ﻿using AppO.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,5 +10,6 @@ namespace AppO.Data
             : base(options)
         {
         }
+        public DbSet<Follow> Follows { get; set; }
     }
 }
