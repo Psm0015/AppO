@@ -1,4 +1,4 @@
-﻿@model appUser
+﻿@model ProfileViewModel
 
 <style>
     .bannerPerfil {
@@ -51,6 +51,12 @@
         color: #666;
         margin: 0;
     }
+
+    .usuario-bio{
+        font-size: 15px;
+        color: #666;
+        margin: 0;
+    }
 </style>
 
 <div class="container">
@@ -64,8 +70,12 @@
 
     <div class="infoLinha">
         <div class="info-perfil">
-            <h1 class="nome-perfil">@Model.Name</h1>
-            <h3 class="usuario-perfil">@("@")@Model.UserName</h3>
+            <h1 class="nome-perfil poppins-light">@Model.Name</h1>
+            <h3 class="usuario-perfil poppins-regular">@("@")@Model.UserName</h3>
+            <p class="usuario-bio poppins-regular">@Model.Biography</p>
+            <p><b>Seguidores: </b>@Model.Followers</p>
+            <p><b>Seguindo: </b>@Model.Following</p>
+
         </div>
         <a asp-action="EditProfile" asp-controller="Account" class="btn btn-primary">Editar perfil</a>
     </div>

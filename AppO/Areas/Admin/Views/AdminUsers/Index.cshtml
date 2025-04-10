@@ -1,0 +1,51 @@
+﻿@model ReflectionIT.Mvc.Paging.PagingList<appUser>
+
+<form method="get" class="form-inline d-flex">
+    <div class="input-group mb-3">
+        <input name="filter" type="text" class="form-control" placeholder="filtro" aria-label="Recipient's username" aria-describedby="button-addon2" value="@Model.RouteValue["Filter"]">
+        <button class="btn btn-outline-info" type="submit" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i> Procurar</button>
+    </div>
+</form>
+
+<table class="table">
+    <thead class="table-dark">
+        <tr>
+            <th class="poppins-semibold">
+                Nome de Usuário
+            </th>
+            <th class="poppins-semibold">
+                Nome
+            </th>
+            <th class="poppins-semibold">
+                E-mail
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="poppins-regular">
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td class="poppins-regular">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td class="poppins-regular">
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td class="text-end">
+                    <div class="btn-group">
+                        <a class="text-info" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a> &nbsp; &nbsp;
+                        <a class="text-info" asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-list"></i></a> &nbsp; &nbsp;
+                        <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a> &nbsp; &nbsp;
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <vc:pager paging-list="@Model"></vc:pager>
+</div>

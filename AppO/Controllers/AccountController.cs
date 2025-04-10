@@ -1,4 +1,5 @@
 ﻿using AppO.Models;
+using AppO.Repositories.Interfaces;
 using AppO.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -10,13 +11,14 @@ public class AccountController : Controller
 {
 
     private readonly UserManager<appUser> _userManager;
-
     private readonly SignInManager<appUser> _signInManager;
+    private readonly IUserRepository _userRepository;
 
-    public AccountController(UserManager<appUser> userManager, SignInManager<appUser> signInManager)
+    public AccountController(UserManager<appUser> userManager, SignInManager<appUser> signInManager, IUserRepository userRepository)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _userRepository = userRepository;
     }
 
     [HttpPost]
@@ -102,13 +104,22 @@ public class AccountController : Controller
     {
         var userId = _userManager.GetUserId(User);
         appUser user = await _userManager.FindByIdAsync(userId);
-
         if (user == null)
         {
             return NotFound();
         }
+        ProfileViewModel profileVM = new ProfileViewModel
+        {
+            Name = user.Name,
+            UserName = user.UserName,
+            Biography = user.Biography ,
+            UserImage = user.UserImage,
+            BannerImage = user.BannerImage,
+            Followers = await _userRepository.FollowerCounter(user.Id),
+            Following = await _userRepository.FollowingCounter(user.Id)
+        };
 
-        return View(user);
+        return View(profileVM);
     }
     [Authorize]
     public async Task<IActionResult> EditProfile()

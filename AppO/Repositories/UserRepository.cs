@@ -45,4 +45,14 @@ public class UserRepository : IUserRepository
             await _context.SaveChangesAsync();
         }
     }
+
+    public async Task<int> FollowerCounter(string userId)
+    {
+        return await _context.Follows.Where(f => f.FollowerId == userId).CountAsync();
+    }
+
+    public async Task<int> FollowingCounter(string userId)
+    {
+        return await _context.Follows.Where(f => f.FollowingId == userId).CountAsync();
+    }
 }

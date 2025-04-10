@@ -66,6 +66,8 @@
         <div class="info-perfil">
             <h1 class="nome-perfil">@Model.User.Name</h1>
             <h3 class="usuario-perfil">@("@")@Model.User.UserName</h3>
+            <p><b>Seguidores: </b>@Model.User.Followers</p>
+            <p><b>Seguindo: </b>@Model.User.Following</p>
         </div>
         <form method="post" asp-action="Seguir" asp-controller="User">
             <input type="hidden" name="UserID" value="@Model.User.Id" />

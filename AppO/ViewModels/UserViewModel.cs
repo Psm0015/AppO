@@ -4,6 +4,6 @@ namespace AppO.ViewModels;
 
 public class UserViewModel
 {
-    public appUser? User { get; set; }
+    public ProfileViewModel? User { get; set; }
     public bool Following { get; set; }
 }

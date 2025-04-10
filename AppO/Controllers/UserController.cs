@@ -34,7 +34,17 @@ namespace AppO.Controllers
 
             UserViewModel user = new UserViewModel
             {
-                User = userInfo,
+                User = new ProfileViewModel
+                {
+                    Id = userInfo.Id,
+                    Name = userInfo.Name,
+                    UserName = userInfo.UserName,
+                    Biography = userInfo.Biography,
+                    UserImage = userInfo.UserImage,
+                    BannerImage = userInfo.BannerImage,
+                    Followers = await userRepository.FollowerCounter(userInfo.Id),
+                    Following = await userRepository.FollowingCounter(userInfo.Id)
+                },
                 Following = await userRepository.IsFollowingAsync(userInfo.Id, myUser.Id)
             };
 

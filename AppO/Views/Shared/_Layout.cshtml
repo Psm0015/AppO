@@ -36,7 +36,7 @@
             </div>
             <ul>
                 <li class="item-menu py-2">
-                    <a class="text-white poppins-regular px-3 py-2" href="#">
+                    <a asp-action="Index" asp-controller="Feed" class="text-white poppins-regular px-3 py-2">
                         <i class="fa-solid fa-house"></i>  Home
                     </a>
                 </li>
@@ -60,6 +60,13 @@
                         <i class="fa-solid fa-user"></i>  Perfil
                     </a>
                 </li>
+                @if(User.IsInRole("Admin")){
+                    <li class="item-menu py-2">
+                        <a asp-action="Index" asp-controller="Admin" asp-area="Admin" class="text-white poppins-regular px-3 py-2">
+                            Administração
+                        </a>
+                    </li>
+                }
                 <li class="item-menu py-2">
                     <form asp-controller="Account" asp-action="Logout" id="logoutForm" method="post" class="">
                         <button type="submit" style="width:auto" class="nav-link btn btn-link py-0 text-danger poppins-regular ">
