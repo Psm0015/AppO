@@ -35,4 +35,51 @@ public class AdminUsersController : Controller
 
         return View(model);
     }
+    public async Task<IActionResult> Edit(string? id)
+    {
+        if (id == null) return NotFound();
+
+        var user = await _context.Users.FindAsync(id);
+
+        if(user == null)
+        {
+            return NotFound();
+        }
+        return View(user);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(string? id, [Bind("Id,UserName, Name, DateOfBirth, Biography, UserImage, BannerImage")] appUser user)
+    {
+        if (id != user.Id) return NotFound();
+
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                var userInDb = await _context.Users.FindAsync(id);
+
+                if (userInDb == null)
+                    return NotFound();
+
+                userInDb.UserName = user.UserName;
+                userInDb.Name = user.Name;
+                userInDb.DateOfBirth = user.DateOfBirth;
+                userInDb.Biography = user.Biography;
+                userInDb.UserImage = user.UserImage;
+                userInDb.BannerImage = user.BannerImage;
+
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                // Opcional: mostrar uma mensagem mais amigável ou tentar resolver conflito
+                throw;
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        return View(user);
+    }
+
 }
