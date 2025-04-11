@@ -82,4 +82,34 @@ public class AdminUsersController : Controller
         return View(user);
     }
 
+    public async Task<IActionResult> BanAccount(string? id)
+    {
+        var user = await _context.Users.FindAsync(id);
+
+        if (user == null) return NotFound();
+
+        user.LockoutEnabled = true;
+
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction(nameof(Index));
+
+
+    }
+
+    public async Task<IActionResult> RestoreAccount(string? id)
+    {
+        var user = await _context.Users.FindAsync(id);
+
+        if (user == null) return NotFound();
+
+        user.LockoutEnabled = false;
+
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction(nameof(Index));
+
+
+    }
+
 }

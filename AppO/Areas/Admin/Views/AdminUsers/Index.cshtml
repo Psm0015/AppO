@@ -19,7 +19,11 @@
             <th class="poppins-semibold">
                 E-mail
             </th>
+            <th class="poppins-semibold align-content-center justify-content-center text-center">
+                Status
+            </th>
             <th></th>
+
         </tr>
     </thead>
     <tbody>
@@ -35,11 +39,23 @@
                 <td class="poppins-regular">
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
+                <td class="poppins-regular align-content-center justify-content-center text-center">
+                    @if(item.LockoutEnabled){
+                        <i style="color:red;" class="fa-solid fa-circle"></i>
+                    }else{
+                        <i style="color:green;" class="fa-solid fa-circle"></i>
+                    }
+                </td>
                 <td class="text-end">
                     <div class="btn-group">
                         <a class="text-info" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a> &nbsp; &nbsp;
                         <a class="text-info" asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-list"></i></a> &nbsp; &nbsp;
-                        <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a> &nbsp; &nbsp;
+                        @if (item.LockoutEnabled)
+                        {
+                            <a asp-action="RestoreAccount" asp-route-id="@item.Id"><i style="color:deepskyblue;" class="fa-solid fa-rotate-left"></i></a>
+                        }else{
+                            <a asp-action="BanAccount" asp-route-id="@item.Id"><i style="color:red;" class="fa-solid fa-ban"></i></a>
+                        }
                     </div>
                 </td>
             </tr>
