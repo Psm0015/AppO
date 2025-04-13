@@ -11,5 +11,6 @@ namespace AppO.Data
         {
         }
         public DbSet<Follow> Follows { get; set; }
+        public DbSet<Banimento> Banimentos { get; set; }
     }
 }

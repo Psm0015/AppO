@@ -50,12 +50,7 @@
                     <div class="btn-group">
                         <a class="text-info" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a> &nbsp; &nbsp;
                         <a class="text-info" asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-list"></i></a> &nbsp; &nbsp;
-                        @if (item.LockoutEnabled)
-                        {
-                            <a asp-action="RestoreAccount" asp-route-id="@item.Id"><i style="color:deepskyblue;" class="fa-solid fa-rotate-left"></i></a>
-                        }else{
-                            <a asp-action="BanAccount" asp-route-id="@item.Id"><i style="color:red;" class="fa-solid fa-ban"></i></a>
-                        }
+                        <a asp-action="BanAccount" asp-route-id="@item.Id"><i style="color:red;" class="fa-solid fa-ban"></i></a>
                     </div>
                 </td>
             </tr>

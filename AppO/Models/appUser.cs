@@ -9,4 +9,5 @@ public class appUser: IdentityUser
     public string? Biography { get; set; }
     public byte[]? UserImage { get; set; }
     public byte[]? BannerImage { get; set; }
+    public bool? IsBanned { get; set; }
 }

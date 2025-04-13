@@ -84,17 +84,8 @@ public class AdminUsersController : Controller
 
     public async Task<IActionResult> BanAccount(string? id)
     {
-        var user = await _context.Users.FindAsync(id);
-
-        if (user == null) return NotFound();
-
-        user.LockoutEnabled = true;
-
-        await _context.SaveChangesAsync();
-
-        return RedirectToAction(nameof(Index));
-
-
+        ViewBag.user = await _context.Users.FindAsync(id);
+        return View();
     }
 
     public async Task<IActionResult> RestoreAccount(string? id)

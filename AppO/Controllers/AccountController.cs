@@ -33,12 +33,6 @@ public class AccountController : Controller
         } 
 
         var user = await _userManager.FindByNameAsync(loginVM.UserName);
-        if (user.LockoutEnabled)
-        {
-            ModelState.AddModelError("", "Usuário Inativo");
-            TempData["Errors"] = "Usuário Inativo";
-            return RedirectToAction("Index", "Home");
-        }
         if(user != null)
         {
             var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
